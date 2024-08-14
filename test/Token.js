@@ -18,7 +18,7 @@ describe('Token', () => {
 		const Token = await ethers.getContractFactory('Token')
 		let token = await Token.deploy()
 		// read //
-		const symbol = await token.symbol
+		const symbol = await token.symbol()
 		// verify //
 		expect(symbol).to.equal('DAPP')
 	})
