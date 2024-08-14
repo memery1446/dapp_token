@@ -1,6 +1,13 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
+//this comes after test 4///////////////////////////////////
+const tokens = (n) => {                                   //
+	return ethers.utils.parseUnits(n.toString(), 'ether')///
+////////////////////////////////////////////////////////////
+
+}
+
 describe('Token', () => {
 	let token
 
@@ -36,7 +43,13 @@ describe('Token', () => {
 		expect(await token.decimals()).to.equal('18')
 	})
 	it('has a total supply', async () => {
-		const value = ethers.utils.parseUnits('1000000', 'ether')
+		///line below comes after test 4///
+		const value = tokens('1000000')
+
+		///line below good through test 4, then above+ln5-6////
+		///const value = 
+		///ethers.utils.parseUnits('1000000', 'ether')
+		///above from ethers library///
 		expect(await token.totalSupply()).to.equal(value)
 	})
 })
