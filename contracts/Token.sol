@@ -11,6 +11,10 @@ contract Token {
 	uint256 public decimals = 18;
 	uint256 public totalSupply = 1000000 * (10**decimals);  
 
-	///no ''s with int's in contract///yes '1000' in .js///
+	constructor(string memory _name, string memory _symbol, uint256 _totalSupply) {
+		name = _name;
+		symbol = _symbol;
+		totalSupply = _totalSupply * (10**decimals);
+	}
 	
 }

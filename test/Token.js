@@ -1,10 +1,12 @@
+///late in test 4, build constructor///
+///then describe deployment after test 4 at4/////
+
+
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
-//this comes after test 4///////////////////////////////////
-const tokens = (n) => {                                   //
-	return ethers.utils.parseUnits(n.toString(), 'ether')///
-////////////////////////////////////////////////////////////
+const tokens = (n) => {                                   
+	return ethers.utils.parseUnits(n.toString(), 'ether')
 
 }
 
@@ -13,44 +15,38 @@ describe('Token', () => {
 
 	beforeEach(async () => {
 		const Token = await ethers.getContractFactory('Token')
-		token = await Token.deploy()
+		token = await Token.deploy('Dapp University', 'DAPP', '1000000')
+		          ///the values above come from building constructor//
+		/////up thru test 4, skip down to it has correct name////
 	})
+////////////////////
+describe('Deployment', () => {
+/////the this container added after test 4 and constructor//
+	const name = 'Dapp University'
+	const symbol = 'DAPP'
+	const decimals = '18'
+	const totalSupply = tokens('1000000')
 
 	it('has correct name', async () => {
-		//check name is correct//
-		// fetch, read, verify///now in beforeEach///
-		////FIRST///const name = await token.name()  //read//
-		/////expect(name).to.equal('Dapp University') //verify//
-///this plus two })'s ends the first test, first time, then below/////
-		//adj after second test///longer///
-
-		expect(await token.name()).to.equal('Dapp University') //lng vsn//
-})
+		//expect(await token.name()).to.equal('Dapp University')// 
+		///above until const under desc.'depl'
+		expect(await token.name()).to.equal(name)
+	})
 	it('has correct symbol', async () => {
-		//fetch//
-		
-		// read //
-		////FIRST////const symbol = await token.symbol()
-		// verify //
-		//////expect(symbol).to.equal('DAPP')
-
-		////end of second text first time, then below adj..////
-
-		expect(await token.symbol()).to.equal('DAPP') //longer vers.//
+		//expect(await token.symbol()).to.equal('DAPP')//
+		////read note above////
+		expect(await token.symbol()).to.equal(symbol) 
 
 	})
 	it('has correct decimals', async () => {
-		expect(await token.decimals()).to.equal('18')
+		expect(await token.decimals()).to.equal(decimals) //note above//
 	})
-	it('has a total supply', async () => {
-		///line below comes after test 4///
-		const value = tokens('1000000')
 
-		///line below good through test 4, then above+ln5-6////
-		///const value = 
-		///ethers.utils.parseUnits('1000000', 'ether')
-		///above from ethers library///
-		expect(await token.totalSupply()).to.equal(value)
+	it('has correct total supply', async () => {
+		expect(await token.totalSupply()).to.equal(totalSupply)//note above//
 	})
+})
+
+
 })
 
