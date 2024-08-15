@@ -14,9 +14,7 @@ describe('Token', () => {
 	
 		accounts = await ethers.getSigners()
 		deployer = accounts[0]
-		///receiver added for test 6/////
 		receiver = accounts[1]
-
 	})
 
 describe('Deployment', () => {
@@ -46,26 +44,21 @@ describe('Deployment', () => {
 	})
 
 describe('Sending Tokens', () => {
-		let amount///let amount added for test 6///
+		let amount, transaction, result
 
-	it('transfers token balances', async () => {
-		//log balance before transfer//
-		console.log('deployer balance pre-transfer', await token.balanceOf(deployer.address))
-		console.log('receiver balance pre-transfer', await token.balanceOf(receiver.address))
-
-		//transfer token//
+		beforeEach(async () => {
 		amount = tokens(100)
-		let transaction = await token.connect(deployer).transfer(receiver.address, amount)
-		let result = transaction.wait()
-		//ensure they're transferred//   ///
+		transaction = await token.connect(deployer).transfer(receiver.address, amount)
+		result = transaction.wait()			
+	})
 
-		///log bal after transfer
-		console.log('deployer balance post-transfer', await token.balanceOf(deployer.address))
-		console.log('receiver balance post-transfer', await token.balanceOf(receiver.address))
+	it('Transfers token balances', async () => {
+		expect(await token.balanceOf(deployer.address)).to.equal(tokens(999900))
+		expect(await token.balanceOf(receiver.address)).to.equal(amount)
 
-			///ensure tokens were transfered (balance changed)///
 
-		/////the above concludes test 6 ////four thingy's below})////
+
+
 	})
 })
 
