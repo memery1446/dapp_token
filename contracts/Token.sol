@@ -6,7 +6,6 @@ import "hardhat/console.sol";
 
 contract Token {
 	string public name;
-	//after first test//
 	string public symbol;
 	uint256 public decimals = 18; 
 	uint256 public totalSupply;  
@@ -14,33 +13,43 @@ contract Token {
 	// Track balances
 	mapping(address => uint256) public balanceOf;
 
-	/// Send tokens///
 	event Transfer(
-	address indexed _from, 
-	address indexed _to, 
-	uint256 _value ///note this one not indexed//
-);////above is tied to emit event below////
+		address indexed from, 
+		address indexed to, 
+		uint256 value 
+	);
+	
+	constructor(
+		string memory _name, 
+		string memory _symbol, 
+		uint256 _totalSupply
+	){
 
-
-	constructor(string memory _name, string memory _symbol, uint256 _totalSupply) {
 		name = _name;
 		symbol = _symbol;
 		totalSupply = _totalSupply * (10**decimals);
-		
 		balanceOf[msg.sender] = totalSupply;
-
 	}
 
-	function transfer(address _to, uint256 _value) public returns (bool success) {
+	function transfer(
+		address _to, 
+		uint256 _value) 
+		public returns (bool success)
+	{
+	
+		require(balanceOf[msg.sender] >= _value);
 
-		//deduct tokens from spender//
+		///line below came after first test 9///
+		require(_to != address(0));   //////////
+
+	
 		balanceOf[msg.sender] = balanceOf[msg.sender] - _value;
-		//credit receiver//
+		
 		balanceOf[_to] = balanceOf[_to] + _value;
 
-		//emit event//
+	
 		emit Transfer(msg.sender, _to, _value);
-		return true; ////recall the bool///
+		return true; 
 	}
 	
 }
