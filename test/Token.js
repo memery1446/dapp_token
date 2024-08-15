@@ -163,17 +163,5 @@ describe('Delegated Token Transfers', () => {
 		await expect(token.connect(exchange).transferFrom(deployer.address, receiver.address, invalidAmount)).to.be.reverted
 
 	})
+  })
 })
-
-})
-
-
-
-
-
-
-
-
-
-
-
