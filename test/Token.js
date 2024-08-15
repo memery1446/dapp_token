@@ -6,16 +6,18 @@ const tokens = (n) => {
 }
 
 describe('Token', () => {
-	let token, accounts, deployer
+	let token, accounts, deployer, receiver
 
 	beforeEach(async () => {
 		const Token = await ethers.getContractFactory('Token')
 		token = await Token.deploy('Dapp University', 'DAPP', '1000000')
 	
-	////lines below comes with test 5 deployer totalbal/////
-		accounts = await ethers.getSigners()//add///////////
-		deployer = accounts[0]///these to 'let' under descr//
-	})//////////////////////////////////////////////////////
+		accounts = await ethers.getSigners()
+		deployer = accounts[0]
+		///receiver added for test 6/////
+		receiver = accounts[1]
+
+	})
 
 describe('Deployment', () => {
 	const name = 'Dapp University'
@@ -40,12 +42,33 @@ describe('Deployment', () => {
 	})
 
 	it('assigns total supply to deployer', async () => {
-		
-		///cconsole.log(deployer.address)////doing this to see who dep is///
 		expect(await token.balanceOf(deployer.address)).to.equal(totalSupply)
-		///here, node//..ethers.getSigners() in beforeEach///
-
 	})
+
+describe('Sending Tokens', () => {
+		let amount///let amount added for test 6///
+
+	it('transfers token balances', async () => {
+		//log balance before transfer//
+		console.log('deployer balance pre-transfer', await token.balanceOf(deployer.address))
+		console.log('receiver balance pre-transfer', await token.balanceOf(receiver.address))
+
+		//transfer token//
+		amount = tokens(100)
+		let transaction = await token.connect(deployer).transfer(receiver.address, amount)
+		let result = transaction.wait()
+		//ensure they're transferred//   ///
+
+		///log bal after transfer
+		console.log('deployer balance post-transfer', await token.balanceOf(deployer.address))
+		console.log('receiver balance post-transfer', await token.balanceOf(receiver.address))
+
+			///ensure tokens were transfered (balance changed)///
+
+		/////the above concludes test 6 ////four thingy's below})////
+	})
+})
+
 })
 
 
