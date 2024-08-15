@@ -10,13 +10,23 @@ contract Token {
 	uint256 public decimals = 18; 
 	uint256 public totalSupply;  
 
-	// Track balances
+	/// Track balances///
 	mapping(address => uint256) public balanceOf;
+
+	///below after test 9, for allowance approval///
+	mapping(address => mapping(address => uint256)) public allowance;
+	///after above, added function approve below///
 
 	event Transfer(
 		address indexed from, 
 		address indexed to, 
 		uint256 value 
+	);
+////below after first test 10/////
+	event Approval(
+		address indexed owner,
+		address indexed spender,
+		uint256 value
 	);
 	
 	constructor(
@@ -52,4 +62,22 @@ contract Token {
 		return true; 
 	}
 	
+	function approve(
+	address _spender,
+	uint256 _value
+	) 
+	public returns(bool success) 
+	{
+		///line below addded after test 11///
+		require(_spender != address(0));
+		////////////////////////////////
+
+		allowance[msg.sender][_spender] = _value;
+		                 ///nested mapping///
+
+		///one line below comes after test 10//return true// ///already there////
+		emit Approval(msg.sender, _spender, _value);
+
+		return true;
+	}
 }
