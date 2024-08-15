@@ -89,22 +89,21 @@ describe('Sending Tokens', () => {
     })
 
 })
-////added after test 9////
+
 describe('Approving Tokens', () => {
 	let amount, transaction, result
 
 	beforeEach(async () => {
 		amount = tokens(100)
 		transaction = await token.connect(deployer).approve(exchange.address, amount)
-		result = await transaction.wait()          ///for above, add exchange above////
+		result = await transaction.wait()          
 	})
 	describe('Success', () => {
 		it('allocates an allowance for delegated token spending', async () => {
-		////token.allowance(depoloyer.address, exchange.address)///
-			////he writes this first, then/////
+	
 			expect(await token.allowance(deployer.address, exchange.address)).to.equal(amount)
 		})
-      ////below added after test 10///is test 11///
+      
 		it('emits an approval event', async () => {
 			const event = result.events[0]
 			expect(event.event).to.equal('Approval')
@@ -115,7 +114,7 @@ describe('Approving Tokens', () => {
 			expect(args.value).to.equal(amount)
 		})
 	})
-		////after test 11////
+	
 	describe('Failure', () => {
 		it('rejects invalid spenders', async () => {
 			await expect(token.connect(deployer).approve)
